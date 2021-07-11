@@ -1,4 +1,10 @@
-# How to build this project skeleton?
+# Monogoose Playground For All?
+
+## How to use?
+
+See project branches.
+
+## How to build node-TS project ASAP?
 
 - Run `npm init` with proper fields naming.
 - Now to use `Typescript` we need to install it:
@@ -11,18 +17,7 @@
 
   - For instant reaoding i use `nodemon` package `yarn add nodemon --dev`
   - Next add `nodemon` configuration file `touch nodemon.json` with below options:
-    `
-    {
-    "watch": ["src"],
-    "ext": "ts",
-    "ignore": ["*.test.ts"],
-    "delay": "3",
-    "execMap": {
-    "ts": "ts-node"
-    }
-    }
-
-        `
+    `{ "watch": ["src"], "ext": "ts", "ignore": ["*.test.ts"], "delay": "3", "execMap": { "ts": "ts-node" } }`
 
   - Add your dependencies `yarn add mongoose express` & `yarn add @types/mongoose && yarn add @types/express`
   - Finally, Add command script to work with both `TS` and hot reloading using `nodemon`: `"dev": "nodemon ./src/app.ts"`
