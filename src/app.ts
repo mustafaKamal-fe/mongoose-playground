@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import errorHandler from './utils/errorHandler';
 import connectMongoose from './utils/connectMongoose';
-import library from './middlewares/library';
+import library from './middlewares/basic/library';
 
 const app = express();
 const PORT = 3000;

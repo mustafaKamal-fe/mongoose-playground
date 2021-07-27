@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import defaultSchemConfig from '../utils/mongooseSchemaConfig';
+import defaultSchemConfig from '../../utils/mongooseSchemaConfig';
 
 const BookSchema = new mongoose.Schema(
 	{

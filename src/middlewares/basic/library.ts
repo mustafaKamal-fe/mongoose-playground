@@ -1,7 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import Person from '../models/person';
-import Book from '../models/book';
-import BookShop from '../models/bookShop';
+import Person from '../../models/basic/person';
+import Book from '../../models/basic/book';
+import BookShop from '../../models/basic/bookShop';
 
 const addBook: RequestHandler = async (
 	req: Request,
