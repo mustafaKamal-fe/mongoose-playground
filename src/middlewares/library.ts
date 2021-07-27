@@ -143,6 +143,26 @@ const filterBooks: RequestHandler = async (req: Request, res: Response) => {
 	});
 	res.end();
 };
+
+const filterBookByBookShopName: RequestHandler = async (
+	req: Request,
+	res: Response
+) => {
+	const { name } = req.query;
+	console.log(name);
+
+	let book = await Book.findOne({ 'bookshop.name': name })
+		.populate('bookshop')
+		.lean()
+		.exec();
+
+	res.status(200);
+	res.json({
+		book,
+		message: `There is no way to filter documents on population path even when we populate the path itself. see https://mongoosejs.com/docs/populate.html#query-conditions`,
+	});
+	res.end();
+};
 export default {
 	getBook,
 	getPerson,
@@ -150,4 +170,5 @@ export default {
 	addBook,
 	addBookShop,
 	filterBooks,
+	filterBookByBookShopName,
 };

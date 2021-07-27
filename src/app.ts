@@ -31,7 +31,7 @@ app.use(connectMongoose);
 // });
 
 app.get('/books', library.filterBooks);
-
+app.get('/book/bookshop/name', library.filterBookByBookShopName);
 // error handler
 app.use(errorHandler);
 
