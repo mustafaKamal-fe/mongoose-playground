@@ -24,4 +24,4 @@ See project branches.
 
 ## Resources
 
-Links: [https://github.com/tsconfig/bases/] [https://www.digitalocean.com/community/tutorials/setting-up-a-node-project-with-typescript] [https://www.digitalocean.com/community/tutorials/workflow-nodemon]
+Links: [https://github.com/tsconfig/bases/] [https://www.digitalocean.com/community/tutorials/setting-up-a-node-project-with-typescript] [https://www.digitalocean.com/community/tutorials/workflow-nodemon] [https://github.com/remy/nodemon/blob/master/doc/sample-nodemon.md]
