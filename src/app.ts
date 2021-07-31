@@ -4,8 +4,6 @@ import errorHandler from './utils/errorHandler';
 import connectMongoose from './utils/connectMongoose';
 import filterQueryLibrary from './middlewares/filters-query/library';
 import basicPopulationLibrary from './middlewares/basic/library';
-import limitedPopulationLibrary from './middlewares/limited/library';
-import nestedLibrary from './middlewares/nested/index';
 
 const app = express();
 const PORT = 3000;
@@ -67,22 +65,6 @@ app.post(
 app.get('/books', filterQueryLibrary.filterBooks);
 app.get('/book/bookshop/name', filterQueryLibrary.filterBookByBookShopName);
 
-/**
- * Limited population
- * Populate by limits using `limit` and `perDocumentLimit` props
- */
-app.get('/writer/:limit', limitedPopulationLibrary.getWriterWithSpesificBooks);
-app.get(
-	'/writer/:limit/perDoc',
-	limitedPopulationLibrary.getWriterWithSpesificBooksPerDocument
-);
-
-/**
- * Populate nested/multi-level paths
- */
-app.get('/nested', nestedLibrary.getNestedUser);
-app.post('/nested', nestedLibrary.createNestedUser);
-app.patch('/nested', nestedLibrary.updateNestedUser);
 // error handler
 app.use(errorHandler);
 
