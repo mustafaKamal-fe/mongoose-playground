@@ -4,6 +4,7 @@ import errorHandler from './utils/errorHandler';
 import connectMongoose from './utils/connectMongoose';
 import filterQueryLibrary from './middlewares/filters-query/library';
 import basicPopulationLibrary from './middlewares/basic/library';
+import limitedPopulationLibrary from './middlewares/limited/library';
 
 const app = express();
 const PORT = 3000;
@@ -45,6 +46,21 @@ app.post(
 
 app.get('/books', filterQueryLibrary.filterBooks);
 app.get('/book/bookshop/name', filterQueryLibrary.filterBookByBookShopName);
+app.post(
+	'/writer',
+	basicPopulationLibrary.addWriter,
+	(_req: Request, res: Response) => {
+		res.status(201);
+		res.end();
+	}
+);
+
+app.get('/writer', basicPopulationLibrary.getWriter);
+app.get('/writer/:limit', limitedPopulationLibrary.getWriterWithSpesificBooks);
+app.get(
+	'/writer/:limit/perDoc',
+	limitedPopulationLibrary.getWriterWithSpesificBooksPerDocument
+);
 // error handler
 app.use(errorHandler);
 
