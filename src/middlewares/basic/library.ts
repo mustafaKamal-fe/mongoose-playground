@@ -2,6 +2,7 @@ import { NextFunction, Request, RequestHandler, Response } from 'express';
 import Person from '../../models/basic/person';
 import Book from '../../models/basic/book';
 import BookShop from '../../models/basic/bookShop';
+import Writer from '../../models/basic/writer';
 
 const addBook: RequestHandler = async (
 	req: Request,
@@ -9,21 +10,12 @@ const addBook: RequestHandler = async (
 	next: NextFunction
 ) => {
 	try {
-		console.log(req.body);
-
 		const { writer, book } = req.body;
-
-		let doc = await Person.create({
-			name: writer.name,
-			age: writer.age,
-		});
-
-		await doc.save();
 
 		let newBook = await Book.create({
 			name: book.name,
 			pDate: book.pDate,
-			writer: doc._id,
+			writer,
 			bookshop: book.bookshop,
 		});
 
@@ -109,10 +101,45 @@ const addBookShop: RequestHandler = async (
 	next();
 };
 
+const addWriter: RequestHandler = async (
+	req: Request,
+	_res: Response,
+	next: NextFunction
+) => {
+	const { person, books } = req.body;
+
+	const doc = await Writer.create({ identity: person, books });
+	await doc.save();
+
+	next();
+};
+
+const getWriter: RequestHandler = async (req: Request, res: Response) => {
+	const id = req.query.id;
+
+	let doc = await Writer.findById(id)
+		.populate({
+			path: 'books',
+			options: { lean: true },
+		})
+		.populate('identity')
+		.lean()
+		.exec();
+
+	res.status(200);
+	res.json({
+		writer: doc,
+		explination: `Writer is retrieved with books path populated to see writer's books. However, here we get all available books (No Limit)`,
+	});
+	res.end();
+};
+
 export default {
 	addBook,
 	addBookShop,
 	addPerson,
 	getBook,
 	getPerson,
+	addWriter,
+	getWriter,
 };
