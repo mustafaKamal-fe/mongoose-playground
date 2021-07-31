@@ -5,7 +5,6 @@ import connectMongoose from './utils/connectMongoose';
 import filterQueryLibrary from './middlewares/filters-query/library';
 import basicPopulationLibrary from './middlewares/basic/library';
 import limitedPopulationLibrary from './middlewares/limited/library';
-import nestedLibrary from './middlewares/nested/index';
 
 const app = express();
 const PORT = 3000;
@@ -77,12 +76,6 @@ app.get(
 	limitedPopulationLibrary.getWriterWithSpesificBooksPerDocument
 );
 
-/**
- * Populate nested/multi-level paths
- */
-app.get('/nested', nestedLibrary.getNestedUser);
-app.post('/nested', nestedLibrary.createNestedUser);
-app.patch('/nested', nestedLibrary.updateNestedUser);
 // error handler
 app.use(errorHandler);
 
