@@ -16,9 +16,10 @@ app.use(connectMongoose);
 app.use(errorHandler);
 
 // ADD platform
-app.post('/platform', library.addPlatform);
-app.post('/game', library.addGame);
-app.get('/game', library.getGame);
+app.post('/platform/multi', library.addPlatform);
+app.post('/game/multi', library.addGame);
+app.get('/game/multi', library.getGame);
+app.post('/ratings/multi', library.addRating);
 app.listen(PORT, () => {
 	console.log(`Server Started Listening at port ${PORT}`);
 });

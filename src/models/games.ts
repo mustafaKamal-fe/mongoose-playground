@@ -1,5 +1,6 @@
 import dynamicSchemaBuilder from '../utils/dynamicSchemaBuilder';
 import Platfrom from './platform';
+import Rating from './ratings';
 
 /**
  * This schema is weird BUT very dynamic. We need to use the model that is created from it to reference some
@@ -16,14 +17,18 @@ import Platfrom from './platform';
  */
 export default async function getGameSchema() {
 	const gameSchema = await dynamicSchemaBuilder({
-		refDbName: 'mongoose-playground-platforms',
-		refSchemaName: 'Platform',
-		refSchema: Platfrom,
+		refDbNames: [
+			'mongoose-playground-platforms',
+			'mongoose-playground-ratings',
+		],
+		refSchemaNames: ['Platform', 'Rating'],
+		refSchemas: [Platfrom, Rating],
 		originalSchemaPattern: {
 			name: String,
 			realease: Date,
 		},
-		pathName: 'platforms',
+
+		pathNames: ['platforms', 'ratings'],
 	});
 
 	return gameSchema;
