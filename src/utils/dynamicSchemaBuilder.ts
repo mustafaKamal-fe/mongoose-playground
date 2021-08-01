@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import connectionFactory from './connectionFactory';
 import modelFactory from './modelFactory';
 
@@ -7,12 +7,14 @@ interface SchemaBuilder {
 	refSchemaNames: string[];
 	refSchemas: mongoose.Schema[];
 	originalSchemaPattern: any;
-	pathNames: string[];
+	pathNames?: string[];
 }
 /**
  *
  * ## Params:
- * - config
+ *
+ * - `config`
+ *
  *  ```ts
  *  refDbName:string, // db of external collection we want to refer to and populate
  *	refSchemaName:string, // schema name of of external collection we want to refer to and populate
@@ -24,6 +26,7 @@ interface SchemaBuilder {
  *  - `mongoose.Schema`
  *
  * ### UPDATE:
+ *
  * This implementation creates a schema object with as much `ref` paths as needed. Example:
  * ```ts
  * 	// previous implementation in branch cross-db returned schema is like:
@@ -43,13 +46,8 @@ interface SchemaBuilder {
  *
  */
 async function dynamicSchemaBuilder(config: SchemaBuilder) {
-	const {
-		refDbNames,
-		refSchemaNames,
-		refSchemas,
-		originalSchemaPattern,
-		pathNames,
-	} = config;
+	const { refDbNames, refSchemaNames, refSchemas, originalSchemaPattern } =
+		config;
 	// connect to external model db(s)
 	const conns = await Promise.all(
 		refDbNames.map(async (refDbName: string) => {
@@ -58,6 +56,7 @@ async function dynamicSchemaBuilder(config: SchemaBuilder) {
 	);
 
 	if (conns) {
+		const modelsToBePopulated: Model<any>[] = [];
 		conns.forEach((conn, i: number) => {
 			// build models objects for each connection
 			if (conn) {
@@ -65,18 +64,20 @@ async function dynamicSchemaBuilder(config: SchemaBuilder) {
 
 				const schemaName = refSchemas[i];
 
-				const pathName = pathNames[i];
-
-				if (modelName && schemaName && pathName) {
+				if (modelName && schemaName) {
 					// build external model from it's schema
 					const refModel = modelFactory(conn, modelName, schemaName);
-					// attach external model to `ref` path for later population
-					originalSchemaPattern[pathName] = [
-						{ type: mongoose.Schema.Types.ObjectId, ref: refModel },
-					];
+					// collect external models
+					modelsToBePopulated.push(refModel);
 				}
 			}
 		});
+
+		// attach models to be populated, inside created schema object
+		originalSchemaPattern['modelName'] = {
+			type: String,
+			enum: [...modelsToBePopulated],
+		};
 
 		// build final schema that is used in cross-db-ref
 		const finalSchema = new mongoose.Schema(originalSchemaPattern);
