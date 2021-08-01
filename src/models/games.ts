@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import dynamicSchemaBuilder from '../utils/dynamicSchemaBuilder';
 import Platfrom from './platform';
 import Rating from './ratings';
@@ -26,9 +27,12 @@ export default async function getGameSchema() {
 		originalSchemaPattern: {
 			name: String,
 			realease: Date,
+			modelId: {
+				type: [mongoose.Schema.Types.ObjectId],
+				required: true,
+				refPath: 'modelId.modelName',
+			},
 		},
-
-		pathNames: ['platforms', 'ratings'],
 	});
 
 	return gameSchema;
