@@ -39,8 +39,7 @@ const addGame = async (req: Request, res: Response) => {
 				const doc = await gameModel.create({
 					name,
 					realease,
-					platforms,
-					ratings,
+					mustafa: [...platforms, ...ratings],
 				});
 				await doc.save();
 				res.status(201);
@@ -67,7 +66,7 @@ const getGame = async (req: Request, res: Response) => {
 
 				const doc = await gameModel
 					.findById(id)
-					.populate('platforms')
+					.populate('modelName')
 					.lean()
 					.exec();
 
