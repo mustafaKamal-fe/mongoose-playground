@@ -27,10 +27,10 @@ export default async function getGameSchema() {
 		originalSchemaPattern: {
 			name: String,
 			realease: Date,
-			modelId: {
+			modelName: {
 				type: [mongoose.Schema.Types.ObjectId],
 				required: true,
-				refPath: 'modelId.modelName',
+				refPath: 'onModel',
 			},
 		},
 	});

@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import errorHandler from './utils/errorHandler';
 import connectMongoose from './utils/connectMongoose';
-// import library from './middlewares/platformLibrary';
+import library from './middlewares/platformLibrary';
 
 const app = express();
 const PORT = 3000;
@@ -20,10 +20,10 @@ app.use(errorHandler);
  */
 
 // ADD platform
-// app.post('/platform/multi/withref', library.addPlatform);
-// app.post('/game/multi/withref', library.addGame);
-// app.get('/game/multi/withref', library.getGame);
-// app.post('/ratings/multi/withref', library.addRating);
+app.post('/platform/multi/withref', library.addPlatform);
+app.post('/game/multi/withref', library.addGame);
+app.get('/game/multi/withref', library.getGame);
+app.post('/ratings/multi/withref', library.addRating);
 app.listen(PORT, () => {
 	console.log(`Server Started Listening at port ${PORT}`);
 });

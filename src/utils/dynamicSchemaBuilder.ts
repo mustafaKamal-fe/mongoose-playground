@@ -74,9 +74,10 @@ async function dynamicSchemaBuilder(config: SchemaBuilder) {
 		});
 
 		// attach models to be populated, inside created schema object
-		originalSchemaPattern['modelName'] = {
+		originalSchemaPattern['onModel'] = {
 			type: String,
-			enum: [...modelsToBePopulated],
+			required: true,
+			enum: modelsToBePopulated,
 		};
 
 		// build final schema that is used in cross-db-ref
