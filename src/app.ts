@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
 import errorHandler from './utils/errorHandler';
 import connectMongoose from './utils/connectMongoose';
@@ -11,25 +11,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // connect to DB (default connection)
 app.use(connectMongoose);
-
-app.post('/person', library.addPerson, (_req: Request, res: Response) => {
-	res.status(201);
-	res.end();
-});
-app.get('/person', library.getPerson);
-
-app.post('/book', library.addBook, (_req: Request, res: Response) => {
-	res.status(201);
-	res.end();
-});
-
-app.get('/book', library.getBook);
-
-app.post('/bookshop', library.addBookShop, (_req: Request, res: Response) => {
-	res.status(201);
-	res.end();
-});
-
+app.post('/user', library.addUser);
+app.post('/blog', library.addPost);
+app.get('/posts', library.getUserPosts);
 // error handler
 app.use(errorHandler);
 
