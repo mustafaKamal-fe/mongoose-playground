@@ -1,9 +1,13 @@
 {
 	"watch": ["src"],
+	"restartable": "rs",
 	"ext": "ts",
-	"ignore": ["*.test.ts"],
-	"delay": "3",
+	"ignore": ["*.test.ts", ".git", "node_modules/**/node_modules"],
+	"delay": "1",
 	"execMap": {
 		"ts": "ts-node"
+	},
+	"env": {
+		"NODE_ENV": "development"
 	}
 }
