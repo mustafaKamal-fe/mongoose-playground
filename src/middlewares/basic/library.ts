@@ -9,8 +9,6 @@ const addBook: RequestHandler = async (
 	next: NextFunction
 ) => {
 	try {
-		console.log(req.body);
-
 		const { writer, book } = req.body;
 
 		let doc = await Person.create({
