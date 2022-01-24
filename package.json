@@ -4,7 +4,7 @@
 	"description": "Mongoose playground",
 	"main": "index.js",
 	"scripts": {
-		"dev": "nodemon ./src/app.ts"
+		"dev": "nodemon ./src/app.ts",
 		"test": "jest --watch"
 	},
 	"keywords": [
